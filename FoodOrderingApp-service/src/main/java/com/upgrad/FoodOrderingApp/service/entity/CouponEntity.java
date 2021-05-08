@@ -5,7 +5,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "coupon")
-@NamedQueries({@NamedQuery(name = "getCouponByCouponName", query = "select c from CouponEntity c where c.couponName =:couponName ")})
+@NamedQueries({@NamedQuery(name = "getCouponByCouponName", query = "select c from CouponEntity c where c.couponName =:couponName "),
+        @NamedQuery(name = "getCouponByUuid", query = "select c from CouponEntity c where c.uuid =:uuid ")
+})
 public class CouponEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
