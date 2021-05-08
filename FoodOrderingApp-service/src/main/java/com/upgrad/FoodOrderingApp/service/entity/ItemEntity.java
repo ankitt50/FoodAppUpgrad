@@ -34,6 +34,9 @@ public class ItemEntity implements Comparable<ItemEntity> {
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<OrderItemEntity> orderItemEntity = new ArrayList<>();
 
+    public ItemEntity() {
+    }
+
     public int getId() {
         return id;
     }

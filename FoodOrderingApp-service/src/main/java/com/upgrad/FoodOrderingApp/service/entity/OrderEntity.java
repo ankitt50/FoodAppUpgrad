@@ -1,12 +1,15 @@
 package com.upgrad.FoodOrderingApp.service.entity;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "orders")
-@NamedQueries({@NamedQuery(name = "getOrdersByRestaurant", query = "select s from OrderEntity s where s.restaurant =:restaurant ")})
+@NamedQueries({@NamedQuery(name = "getOrdersByRestaurant", query = "select s from OrderEntity s where s.restaurant =:restaurant "),
+        @NamedQuery(name = "getPastOrdersOfUsers", query = "select s from OrderEntity s where s.customer =:customer ")
+})
 public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +28,9 @@ public class OrderEntity {
 
     @Column(name = "discount")
     private int discount;
+
+    @Column(name = "date")
+    private LocalDateTime date;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
@@ -118,6 +124,14 @@ public class OrderEntity {
 
     public void setPayment(PaymentEntity payment) {
         this.payment = payment;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 
     public List<OrderItemEntity> getOrderItemEntity() {

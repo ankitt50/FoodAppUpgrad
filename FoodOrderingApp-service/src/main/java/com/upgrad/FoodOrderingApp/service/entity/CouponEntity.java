@@ -4,7 +4,8 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "payment")
+@Table(name = "coupon")
+@NamedQueries({@NamedQuery(name = "getCouponByCouponName", query = "select c from CouponEntity c where c.couponName =:couponName ")})
 public class CouponEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +23,9 @@ public class CouponEntity {
 
     @OneToMany(mappedBy = "coupon", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<OrderEntity> order;
+
+    public CouponEntity() {
+    }
 
     public int getId() {
         return id;
@@ -62,4 +66,6 @@ public class CouponEntity {
     public void setOrder(List<OrderEntity> order) {
         this.order = order;
     }
+
+
 }

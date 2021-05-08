@@ -24,6 +24,9 @@ public class OrderItemEntity {
     @JoinColumn(name = "item_id")
     private ItemEntity item;
 
+    public OrderItemEntity() {
+    }
+
     public int getId() {
         return id;
     }

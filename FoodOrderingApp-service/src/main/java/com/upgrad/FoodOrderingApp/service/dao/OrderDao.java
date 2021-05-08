@@ -1,5 +1,7 @@
 package com.upgrad.FoodOrderingApp.service.dao;
 
+import com.upgrad.FoodOrderingApp.service.entity.CouponEntity;
+import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
 import com.upgrad.FoodOrderingApp.service.entity.OrderEntity;
 import com.upgrad.FoodOrderingApp.service.entity.RestaurantEntity;
 import org.springframework.stereotype.Repository;
@@ -22,4 +24,23 @@ public class OrderDao {
             return null;
         }
     }
+
+    public List<OrderEntity> getPastOrdersOfUsers(CustomerEntity customerEntity) {
+        try {
+            return entityManager.createNamedQuery("getPastOrdersOfUsers", OrderEntity.class).setParameter("customer", customerEntity).getResultList();
+        }
+        catch (NoResultException exception) {
+            return null;
+        }
+    }
+
+    public CouponEntity getCouponByCouponName(String couponName) {
+        try {
+            return entityManager.createNamedQuery("getCouponByCouponName", CouponEntity.class).setParameter("couponName", couponName).getSingleResult();
+        }
+        catch (NoResultException exception) {
+            return null;
+        }
+    }
+
 }
