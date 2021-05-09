@@ -1,0 +1,6 @@
+com\upgrad\FoodOrderingApp\api\controller\CustomerControllerTest.class
+com\upgrad\FoodOrderingApp\api\controller\OrderControllerTest.class
+com\upgrad\FoodOrderingApp\api\controller\CategoryControllerTest.class
+com\upgrad\FoodOrderingApp\api\controller\AddressControllerTest.class
+com\upgrad\FoodOrderingApp\api\controller\PaymentControllerTest.class
+com\upgrad\FoodOrderingApp\api\controller\ItemControllerTest.class

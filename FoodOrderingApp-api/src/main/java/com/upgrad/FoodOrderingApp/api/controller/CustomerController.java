@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Base64;
 
 @RestController
-@RequestMapping(path = "/api")
 public class CustomerController {
 
 
@@ -28,7 +27,7 @@ public class CustomerController {
 
 
     @RequestMapping(method = RequestMethod.POST, path = "/customer/signup", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<SignupCustomerResponse> customerSignup(final SignupCustomerRequest signupCustomerRequest) throws SignUpRestrictedException {
+    public ResponseEntity<SignupCustomerResponse> customerSignup(@RequestBody final SignupCustomerRequest signupCustomerRequest) throws SignUpRestrictedException {
 
         final CustomerEntity newCustomer = new CustomerEntity();
 
@@ -41,7 +40,7 @@ public class CustomerController {
 
         boolean emptyFieldFound = false;
 
-        if (signupCustomerRequest.getFirstName() != null) {
+        if (signupCustomerRequest.getFirstName() != null && !signupCustomerRequest.getFirstName().equals("")) {
             newCustomer.setFirstName(signupCustomerRequest.getFirstName());
         }
         else {
@@ -55,21 +54,21 @@ public class CustomerController {
             newCustomer.setLastName("");
         }
 
-        if(signupCustomerRequest.getEmailAddress() != null) {
+        if(signupCustomerRequest.getEmailAddress() != null && !signupCustomerRequest.getEmailAddress().equals("")) {
             newCustomer.setEmail(signupCustomerRequest.getEmailAddress());
         }
         else {
             emptyFieldFound = true;
         }
 
-        if(signupCustomerRequest.getPassword() != null) {
+        if(signupCustomerRequest.getPassword() != null && !signupCustomerRequest.getPassword().equals("")) {
             newCustomer.setPassword(signupCustomerRequest.getPassword());
         }
         else {
             emptyFieldFound = true;
         }
 
-        if(signupCustomerRequest.getContactNumber() != null) {
+        if(signupCustomerRequest.getContactNumber() != null && !signupCustomerRequest.getContactNumber().equals("")) {
             newCustomer.setContactNumber(signupCustomerRequest.getContactNumber());
         }
         else {
@@ -159,10 +158,10 @@ public class CustomerController {
 
     // to update customer details
     @PutMapping(path = "/customer", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<UpdateCustomerResponse> updateCustomerDetails(@RequestHeader(name = "authorization") final String authToken, final UpdateCustomerRequest updateCustomerRequest)
+    public ResponseEntity<UpdateCustomerResponse> updateCustomerDetails(@RequestHeader(name = "authorization") final String authToken, @RequestBody final UpdateCustomerRequest updateCustomerRequest)
             throws UpdateCustomerException, AuthorizationFailedException {
 
-        if(updateCustomerRequest.getFirstName() != null) {
+        if(updateCustomerRequest.getFirstName() != null && !updateCustomerRequest.getFirstName().equals("")) {
             String token = getToken(authToken);
             CustomerEntity customerEntity = customerBusinessService.checkAuthToken(token, "/customer");
             CustomerEntity updatedCustomerEntity = customerBusinessService.updateCustomerDetails(customerEntity, updateCustomerRequest.getFirstName(), updateCustomerRequest.getLastName());
@@ -181,9 +180,9 @@ public class CustomerController {
     }
 
     @PutMapping(path = "/customer/password", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<UpdatePasswordResponse> updateCustomerPassword(@RequestHeader(name = "authorization") final String authToken, final UpdatePasswordRequest updatePasswordRequest ) throws AuthorizationFailedException, UpdateCustomerException {
+    public ResponseEntity<UpdatePasswordResponse> updateCustomerPassword(@RequestHeader(name = "authorization") final String authToken,@RequestBody final UpdatePasswordRequest updatePasswordRequest ) throws AuthorizationFailedException, UpdateCustomerException {
 
-        if(updatePasswordRequest.getNewPassword() == null || updatePasswordRequest.getOldPassword() == null) {
+        if((updatePasswordRequest.getNewPassword() == null || updatePasswordRequest.getNewPassword().equals("")) || (updatePasswordRequest.getOldPassword() == null || updatePasswordRequest.getOldPassword().equals(""))) {
             throw new UpdateCustomerException("UCR-003","No field should be empty");
         }
 

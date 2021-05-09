@@ -3,6 +3,7 @@ com\upgrad\FoodOrderingApp\api\model\CustomerOrderResponse.class
 com\upgrad\FoodOrderingApp\api\config\SwaggerConfiguration.class
 com\upgrad\FoodOrderingApp\api\model\SaveOrderResponse.class
 io\swagger\configuration\HomeController.class
+com\upgrad\FoodOrderingApp\api\controller\OrderController.class
 com\upgrad\FoodOrderingApp\api\model\ItemQuantityResponse.class
 com\upgrad\FoodOrderingApp\api\model\ItemQuantityResponseItem$TypeEnum.class
 io\swagger\api\ApiResponseMessage.class
@@ -24,6 +25,7 @@ com\upgrad\FoodOrderingApp\api\model\LoginResponse.class
 com\upgrad\FoodOrderingApp\api\model\UpdateCustomerResponse.class
 io\swagger\api\NotFoundException.class
 io\swagger\api\ApiException.class
+com\upgrad\FoodOrderingApp\api\controller\OrderController$1.class
 com\upgrad\FoodOrderingApp\api\model\CategoryListResponse.class
 com\upgrad\FoodOrderingApp\api\model\OrderListCoupon.class
 com\upgrad\FoodOrderingApp\api\model\UpdatePasswordResponse.class

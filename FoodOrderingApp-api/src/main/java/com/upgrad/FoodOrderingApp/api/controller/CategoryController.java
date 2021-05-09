@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "/api")      /* Setting base path to "/api" */
 public class CategoryController {
 
     @Autowired

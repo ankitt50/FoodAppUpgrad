@@ -50,21 +50,21 @@ public class RestExceptionHandler {
     public ResponseEntity<ErrorResponse> handleAddressNotFoundException(AddressNotFoundException exc,
                                                                        WebRequest request) {
         return new ResponseEntity<ErrorResponse>(new ErrorResponse().code(exc.getCode()).
-                message(exc.getErrorMessage()), HttpStatus.BAD_REQUEST);
+                message(exc.getErrorMessage()), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(CategoryNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleCategoryNotFoundException(CategoryNotFoundException exc,
                                                                         WebRequest request) {
         return new ResponseEntity<ErrorResponse>(new ErrorResponse().code(exc.getCode()).
-                message(exc.getErrorMessage()), HttpStatus.BAD_REQUEST);
+                message(exc.getErrorMessage()), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(RestaurantNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleRestaurantNotFoundException(RestaurantNotFoundException exc,
                                                                          WebRequest request) {
         return new ResponseEntity<ErrorResponse>(new ErrorResponse().code(exc.getCode()).
-                message(exc.getErrorMessage()), HttpStatus.BAD_REQUEST);
+                message(exc.getErrorMessage()), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(InvalidRatingException.class)
@@ -79,14 +79,14 @@ public class RestExceptionHandler {
     public ResponseEntity<ErrorResponse> handleCouponNotFoundException(CouponNotFoundException exc,
                                                                       WebRequest request) {
         return new ResponseEntity<ErrorResponse>(new ErrorResponse().code(exc.getCode()).
-                message(exc.getErrorMessage()), HttpStatus.BAD_REQUEST);
+                message(exc.getErrorMessage()), HttpStatus.NOT_FOUND);
     }
     //PaymentMethodNotFoundException
     @ExceptionHandler(PaymentMethodNotFoundException.class)
     public ResponseEntity<ErrorResponse> handlePaymentMethodNotFoundException(PaymentMethodNotFoundException exc,
                                                                        WebRequest request) {
         return new ResponseEntity<ErrorResponse>(new ErrorResponse().code(exc.getCode()).
-                message(exc.getErrorMessage()), HttpStatus.BAD_REQUEST);
+                message(exc.getErrorMessage()), HttpStatus.NOT_FOUND);
     }
 
     //ItemNotFoundException

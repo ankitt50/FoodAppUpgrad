@@ -21,7 +21,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(path = "/api")      /* Setting base path to "/api" */
 public class RestaurantController {
 
     @Autowired

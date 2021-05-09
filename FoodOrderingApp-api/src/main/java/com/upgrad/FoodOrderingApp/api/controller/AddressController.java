@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
-@RequestMapping(path = "/api")
 public class AddressController {
 
     @Autowired
@@ -31,7 +30,7 @@ public class AddressController {
     @RequestMapping(method = RequestMethod.POST, path = "/address",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<SaveAddressResponse> saveAddress(@RequestHeader(name = "authorization") final String authToken, final SaveAddressRequest saveAddressRequest)
+    public ResponseEntity<SaveAddressResponse> saveAddress(@RequestHeader(name = "authorization") final String authToken,@RequestBody final SaveAddressRequest saveAddressRequest)
             throws AuthorizationFailedException, SaveAddressException, AddressNotFoundException {
 
 
@@ -41,31 +40,31 @@ public class AddressController {
 
         boolean isAnyFieldEmpty = false;
 
-        if(saveAddressRequest.getFlatBuildingName()==null){
+        if(saveAddressRequest.getFlatBuildingName()==null || saveAddressRequest.getFlatBuildingName().equals("")){
             isAnyFieldEmpty = true;
         }else{
             addressEntity.setFlatBuildNumber(saveAddressRequest.getFlatBuildingName());
         }
 
-        if(saveAddressRequest.getLocality()==null){
+        if(saveAddressRequest.getLocality()==null || saveAddressRequest.getLocality().equals("")){
             isAnyFieldEmpty = true;
         }else{
             addressEntity.setLocality(saveAddressRequest.getLocality());
         }
 
-        if(saveAddressRequest.getCity()==null){
+        if(saveAddressRequest.getCity()==null || saveAddressRequest.getCity().equals("")){
             isAnyFieldEmpty = true;
         }else{
             addressEntity.setCity(saveAddressRequest.getCity());
         }
 
-        if(saveAddressRequest.getPincode()==null){
+        if(saveAddressRequest.getPincode()==null || saveAddressRequest.getPincode().equals("")){
             isAnyFieldEmpty = true;
         }else{
             addressEntity.setPincode(saveAddressRequest.getPincode());
         }
 
-        if(saveAddressRequest.getStateUuid()==null){
+        if(saveAddressRequest.getStateUuid()==null || saveAddressRequest.getStateUuid().equals("")){
             isAnyFieldEmpty = true;
         }else{
             StateEntity state = addressBusinessService.getStateByUuid(saveAddressRequest.getStateUuid());
@@ -160,12 +159,12 @@ public class AddressController {
         AddressEntity addressEntity = addressBusinessService.getAddressByUuid(addressID);
 
         if(addressEntity==null) {
-            throw new AddressNotFoundException("ANF-003)","No address by this id");
+            throw new AddressNotFoundException("ANF-003","No address by this id");
         }
 
         boolean anyUserMatched = false;
         AddressEntity deletedAddress = new AddressEntity();
-        if(addressEntity.getCustomers().isEmpty()) {
+        if(addressEntity.getCustomers()==null || addressEntity.getCustomers().isEmpty()) {
             throw new AuthorizationFailedException("ATHR-004","You are not authorized to view/update/delete any one else's address");
         }
         else {

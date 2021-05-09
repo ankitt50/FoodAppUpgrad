@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @RestController
-@RequestMapping(path = "/api")
 public class OrderController {
     @Autowired
     private CustomerBusinessService customerBusinessService;
@@ -46,13 +45,13 @@ public class OrderController {
     }
 
     @GetMapping(path = "/order", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<List<OrderList>> getPastOrdersOfUsers(@RequestHeader(name = "authorization") final String authToken) throws AuthorizationFailedException {
+    public ResponseEntity<CustomerOrderResponse> getPastOrdersOfUsers(@RequestHeader(name = "authorization") final String authToken) throws AuthorizationFailedException {
         String token = getToken(authToken);
         CustomerEntity customerEntity = customerBusinessService.checkAuthToken(token, "/order");
         List<OrderEntity> ordersForCustomer = orderService.getPastOrdersOfUsers(customerEntity);
 
         if(ordersForCustomer == null || ordersForCustomer.isEmpty()) {
-            return new ResponseEntity<List<OrderList>>(new ArrayList<OrderList>(),HttpStatus.OK);
+            return new ResponseEntity<CustomerOrderResponse>(new CustomerOrderResponse().orders(new ArrayList<OrderList>()),HttpStatus.OK);
         }
         
         List<OrderList> responseOrderList = new ArrayList<OrderList>();
@@ -109,13 +108,13 @@ public class OrderController {
             responseOrderList.add(temp);
         }
 
-        return new ResponseEntity<List<OrderList>>(responseOrderList, HttpStatus.OK);
+        return new ResponseEntity<CustomerOrderResponse>(new CustomerOrderResponse().orders(responseOrderList), HttpStatus.OK);
 
     }
 
     @PostMapping(path = "/order", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 
-    public ResponseEntity<SaveOrderResponse> saveOrder(@RequestHeader(name = "authorization") final String authToken, final SaveOrderRequest saveOrderRequest) throws AuthorizationFailedException, CouponNotFoundException, AddressNotFoundException, PaymentMethodNotFoundException, RestaurantNotFoundException, ItemNotFoundException {
+    public ResponseEntity<SaveOrderResponse> saveOrder(@RequestHeader(name = "authorization") final String authToken, @RequestBody final SaveOrderRequest saveOrderRequest) throws AuthorizationFailedException, CouponNotFoundException, AddressNotFoundException, PaymentMethodNotFoundException, RestaurantNotFoundException, ItemNotFoundException {
         String token = getToken(authToken);
         CustomerEntity customerEntity = customerBusinessService.checkAuthToken(token, "/order");
         CouponEntity couponEntity = null;
@@ -137,7 +136,7 @@ public class OrderController {
             addressEntity = addressBusinessService.getAddressByUuid(saveOrderRequest.getAddressId());
 
             if(addressEntity==null) {
-                throw new AddressNotFoundException("ANF-003)","No address by this id");
+                throw new AddressNotFoundException("ANF-003","No address by this id");
             }
 
 
