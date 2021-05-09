@@ -44,7 +44,7 @@ public class RestaurantController {
 
         RestaurantListResponse response;    /* Response entity created by Swagger plugin */
         List<RestaurantEntity> allRestaurants = restaurantService.getAllRestaurants();
-        List<RestaurantEntity> restaurants = allRestaurants.stream().filter(r -> r.getRestaurantName().toLowerCase().contains(restaurantName)).collect(Collectors.toList());
+        List<RestaurantEntity> restaurants = allRestaurants.stream().filter(r -> r.getRestaurantName().toLowerCase().contains(restaurantName.toLowerCase())).collect(Collectors.toList());
 
         response = getRestaurantListResponseFromRestaurantEntity(restaurants);
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -120,7 +120,7 @@ public class RestaurantController {
 
     // endpoint for adding rating
     @PutMapping(path = "/restaurant/edit/{restaurant_id}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<RestaurantUpdatedResponse> updateRatingByRestaurantId(@RequestHeader(name = "authorization") final String authToken, @RequestHeader(name = "customer_rating") final Integer givenCustomerRating, @PathVariable(name = "restaurant_id") final String restaurantUuid) throws AuthorizationFailedException, RestaurantNotFoundException, InvalidRatingException {
+    public ResponseEntity<RestaurantUpdatedResponse> updateRatingByRestaurantId(@RequestHeader(name = "authorization") final String authToken, @RequestParam(name = "customer_rating") final Integer givenCustomerRating, @PathVariable(name = "restaurant_id") final String restaurantUuid) throws AuthorizationFailedException, RestaurantNotFoundException, InvalidRatingException {
         String token = getToken(authToken);
         customerBusinessService.checkAuthToken(token, "/restaurant/edit/{restaurant_id}");
 

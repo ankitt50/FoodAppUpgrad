@@ -58,7 +58,7 @@ public class CategoryControllerTest {
         when(mockCategoryService.getCategoryById("sampleCategoryId")).thenReturn(categoryEntity);
 
         final String response = mockMvc
-                .perform(get("/api/category/sampleCategoryId").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .perform(get("/category/sampleCategoryId").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -79,7 +79,7 @@ public class CategoryControllerTest {
         when(mockCategoryService.getCategoryById(anyString())).thenReturn(null);
 
         mockMvc
-                .perform(get("/api/category/emptyString").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .perform(get("/category/emptyString").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("code").value("CNF-002"));
         verify(mockCategoryService, times(1)).getCategoryById(anyString());
@@ -92,7 +92,7 @@ public class CategoryControllerTest {
         when(mockCategoryService.getCategoryById(anyString())).thenReturn(null);
 
         mockMvc
-                .perform(get("/api/category/someCategory").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .perform(get("/category/someCategory").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("code").value("CNF-002"));
         verify(mockCategoryService, times(1)).getCategoryById(anyString());
@@ -109,7 +109,7 @@ public class CategoryControllerTest {
         when(mockCategoryService.getAll()).thenReturn(Collections.singletonList(categoryEntity));
 
         final String response = mockMvc
-                .perform(get("/api/category").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .perform(get("/category").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -126,7 +126,7 @@ public class CategoryControllerTest {
         when(mockCategoryService.getAll()).thenReturn(Collections.emptyList());
 
         final String response = mockMvc
-                .perform(get("/api/category").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .perform(get("/category").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 

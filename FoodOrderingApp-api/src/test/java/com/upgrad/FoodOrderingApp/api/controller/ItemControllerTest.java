@@ -58,7 +58,7 @@ public class ItemControllerTest {
                 .thenReturn(restaurantEntity);
 
         final String responseString = mockMvc
-                .perform(get("/api/item/restaurant/some_restaurant_id")
+                .perform(get("/item/restaurant/some_restaurant_id")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
@@ -76,7 +76,7 @@ public class ItemControllerTest {
         when(mockRestaurantService.getRestaurantByUuid("some_restaurant_id")).thenReturn(null);
 
         mockMvc
-                .perform(get("/api/item/restaurant/some_restaurant_id").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .perform(get("/item/restaurant/some_restaurant_id").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("code").value("RNF-001"));
     }

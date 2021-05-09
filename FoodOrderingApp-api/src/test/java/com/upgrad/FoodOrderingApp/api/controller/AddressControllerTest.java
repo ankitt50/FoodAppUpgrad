@@ -68,7 +68,7 @@ public class AddressControllerTest {
         when(mockAddressService.isPincodeValid(anyString())).thenReturn(true);
 
         mockMvc
-                .perform(post("/api/address")
+                .perform(post("/address")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2")
                         .content("{\"flat_building_name\":\"xyz\", \"locality\":\"abc\", \"city\":\"pqr\", \"pincode\":\"282005\", \"state_uuid\":\"testUUID\"}"))
@@ -87,7 +87,7 @@ public class AddressControllerTest {
                 .thenThrow(new AuthorizationFailedException("ATHR-001", "Customer is not Logged in."));
 
         mockMvc
-                .perform(post("/api/address")
+                .perform(post("/address")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer non_existing_access_token").
                                 content("{\"flat_building_name\":\"xyz\", \"locality\":\"abc\", \"city\":\"pqr\", \"pincode\":\"282005\", \"state_uuid\":\"testUUID\"}")
@@ -103,7 +103,7 @@ public class AddressControllerTest {
                 .thenThrow(new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint."));
 
         mockMvc
-                .perform(post("/api/address")
+                .perform(post("/address")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken")
                         .content("{\"flat_building_name\":\"xyz\", \"locality\":\"abc\", \"city\":\"pqr\", \"pincode\":\"282005\", \"state_uuid\":\"testUUID\"}")
@@ -121,7 +121,7 @@ public class AddressControllerTest {
                 .thenThrow(new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint."));
 
         mockMvc
-                .perform(post("/api/address")
+                .perform(post("/address")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken1")
                         .content("{\"flat_building_name\":\"xyz\", \"locality\":\"abc\", \"city\":\"pqr\", \"pincode\":\"282005\", \"state_uuid\":\"testUUID\"}")
@@ -139,7 +139,7 @@ public class AddressControllerTest {
         when(mockAddressService.getStateByUuid(anyString())).thenReturn(null);
 
         mockMvc
-                .perform(post("/api/address")
+                .perform(post("/address")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2")
                         .content("{\"flat_building_name\":\"xyz\", \"locality\":\"abc\", \"city\":\"pqr\", \"pincode\":\"100000\", \"state_uuid\":\"testUUID\"}"))
@@ -157,7 +157,7 @@ public class AddressControllerTest {
         when(mockAddressService.getStateByUuid(anyString())).thenReturn(new StateEntity());
 
         mockMvc
-                .perform(post("/api/address")
+                .perform(post("/address")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2")
                         .content("{\"flat_building_name\":\"xyz\", \"locality\":\"abc\", \"city\":\"\", \"pincode\":\"123456\", \"state_uuid\":\"testUUID\"}"))
@@ -175,7 +175,7 @@ public class AddressControllerTest {
         when(mockAddressService.getStateByUuid(anyString())).thenReturn(new StateEntity());
 
         mockMvc
-                .perform(post("/api/address")
+                .perform(post("/address")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2")
                         .content("{\"flat_building_name\":\"xyz\", \"locality\":\"abc\", \"city\":\"pqr\", \"pincode\":\"\", \"state_uuid\":\"testUUID\"}"))
@@ -208,7 +208,7 @@ public class AddressControllerTest {
         when(mockAddressService.deleteAddress(addressEntity, customerEntity)).thenReturn(deletedAddressEntity);
 
         mockMvc
-                .perform(delete("/api/address/82849cd5-106e-4b34-b9bf-94954c6ff527")
+                .perform(delete("/address/82849cd5-106e-4b34-b9bf-94954c6ff527")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2")
                         .content("{\"flat_building_name\":\"xyz\", \"locality\":\"abc\", \"city\":\"pqr\", \"pincode\":\"100000\", \"state_uuid\":\"c860e78a-a29b-11e8-9a3a-720006ceb890\"}"))
@@ -227,7 +227,7 @@ public class AddressControllerTest {
                 .thenThrow(new AuthorizationFailedException("ATHR-001", "Customer is not Logged in."));
 
         mockMvc
-                .perform(delete("/api/address/address_id")
+                .perform(delete("/address/address_id")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer non_existing_access_token"))
                 .andExpect(status().isForbidden())
@@ -242,7 +242,7 @@ public class AddressControllerTest {
                 .thenThrow(new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint."));
 
         mockMvc
-                .perform(delete("/api/address/address_id")
+                .perform(delete("/address/address_id")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken"))
                 .andExpect(status().isForbidden())
@@ -257,7 +257,7 @@ public class AddressControllerTest {
                 .thenThrow(new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint."));
 
         mockMvc
-                .perform(delete("/api/address/address_id")
+                .perform(delete("/address/address_id")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken1"))
                 .andExpect(status().isForbidden())
@@ -274,7 +274,7 @@ public class AddressControllerTest {
         when(mockAddressService.getAddressByUuid("82849cd5-106e-4b34-b9bf-94954c6ff527")).thenReturn(null);
 
         mockMvc
-                .perform(delete("/api/address/82849cd5-106e-4b34-b9bf-94954c6ff527")
+                .perform(delete("/address/82849cd5-106e-4b34-b9bf-94954c6ff527")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2")
                         .content("{\"flat_building_name\":\"xyz\", \"locality\":\"abc\", \"city\":\"pqr\", \"pincode\":\"100000\", \"state_uuid\":\"c860e78a-a29b-11e8-9a3a-720006ceb890\"}"))
@@ -310,7 +310,7 @@ public class AddressControllerTest {
         when(mockAddressService.deleteAddress(addressEntity, customerEntity)).thenReturn(deletedAddressEntity);
 
         mockMvc
-                .perform(delete("/api/address/82849cd5-106e-4b34-b9bf-94954c6ff527")
+                .perform(delete("/address/82849cd5-106e-4b34-b9bf-94954c6ff527")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2")
                         .content("{\"flat_building_name\":\"xyz\", \"locality\":\"abc\", \"city\":\"pqr\", \"pincode\":\"100000\", \"state_uuid\":\"c860e78a-a29b-11e8-9a3a-720006ceb890\"}"))
@@ -350,7 +350,7 @@ public class AddressControllerTest {
 
 
         final String response = mockMvc
-                .perform(get("/api/address/customer")
+                .perform(get("/address/customer")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2"))
                 .andExpect(status().isOk())
@@ -378,7 +378,7 @@ public class AddressControllerTest {
                 .thenThrow(new AuthorizationFailedException("ATHR-001", "Customer is not Logged in."));
 
         mockMvc
-                .perform(get("/api/address/customer")
+                .perform(get("/address/customer")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer non_existing_access_token"))
                 .andExpect(status().isForbidden())
@@ -394,7 +394,7 @@ public class AddressControllerTest {
                 .thenThrow(new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint."));
 
         mockMvc
-                .perform(get("/api/address/customer")
+                .perform(get("/address/customer")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken"))
                 .andExpect(status().isForbidden())
@@ -410,7 +410,7 @@ public class AddressControllerTest {
                 .thenThrow(new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint."));
 
         mockMvc
-                .perform(delete("/api/address/customer")
+                .perform(delete("/address/customer")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken1"))
                 .andExpect(status().isForbidden())
@@ -432,7 +432,7 @@ public class AddressControllerTest {
         when(mockAddressService.getAllStates()).thenReturn(Collections.singletonList(stateEntity));
 
         final String response = mockMvc
-                .perform(get("/api/states").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .perform(get("/states").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -450,7 +450,7 @@ public class AddressControllerTest {
         when(mockAddressService.getAllStates()).thenReturn(Collections.emptyList());
 
         final String response = mockMvc
-                .perform(get("/api/states").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .perform(get("/states").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
